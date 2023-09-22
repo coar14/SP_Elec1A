@@ -7,20 +7,33 @@
     <title>Calendar Activity</title>
     
     <style>
-         table {
+        table {
             margin: 100px auto;
+        }
+        td{
+            text-align: center;
+            border: 1px solid grey;
+            width: 50px;
+        }
+        tr {
+            border: 1px solid grey;
         }
         .button-container {
             display: flex;
-            justify-content: center; 
-            margin-top: 10px; 
+            justify-content: center;
+            align-items: center;
         }
         form {
             margin: 0; 
         }
         button {
-            padding: 5px 10px;
-            
+            padding: 20px 10px;    
+            margin-right: 20px;        
+        }
+        .current-day {
+            background-color: #3498db; 
+            color: #fff;
+            font-weight: bold; 
         }
     </style>
 </head>
@@ -67,16 +80,16 @@
     $days_in_month = cal_days_in_month(0, $month, $year);
 ?>
 
-<table class="table-info" border="1" width="294">
+<table class="table-info" border="5" width="294">
         <tr><th colspan="7"> <?php echo '<center>', $month_title . ' ' . $year; ?> </th></tr>
         <tr>
-            <td width="42">S</td>
-            <td width="42">M</td>
-            <td width="42">T</td>
-            <td width="42">W</td>
-            <td width="42">T</td>
-            <td width="42">F</td>
-            <td width="42">S</td>
+            <td>S</td>
+            <td>M</td>
+            <td>T</td>
+            <td>W</td>
+            <td>Th</td>
+            <td>F</td>
+            <td>S</td>
         </tr>
 <?php 
     $day_count = 1;
@@ -90,7 +103,10 @@
     $day_num = 1;
 
     while ($day_num <= $days_in_month){
-        echo "<td> $day_num </td>";
+
+        $cell_class = ($day_num == $day && $month == date('m') && $year == date('Y')) ? 'current-day' : '';
+
+        echo "<td class='$cell_class'>$day_num</td>";
         $day_num++;
         $day_count++;
 
@@ -110,22 +126,21 @@
 ?>
 
     <div class="button-container">
-        
-    <form action="" method="get">
-        <input type="hidden" name="month" value="<?php echo date('m', strtotime("-1 month", $first_day)); ?>">
-        <input type="hidden" name="year" value="<?php echo date('Y', strtotime("-1 month", $first_day)); ?>">
-        <button type="submit" class="btn btn-outline-primary btn-sm">Previous</button>
-    </form>
-    <form action="" method="get">
-        <input type="hidden" name="month" value="<?php echo date('m', strtotime("+1 month", $first_day)); ?>">
-        <input type="hidden" name="year" value="<?php echo date('Y', strtotime("+1 month", $first_day)); ?>">
-        <button type="submit" class="btn btn-outline-primary btn-sm">Next</button>
-    </form>
-    <form action="" method="get">
-        <input type="hidden" name="month" value="<?php echo date('m'); ?>">
-        <input type="hidden" name="year" value="<?php echo date('Y'); ?>">
-        <button type="submit" class="btn btn-secondary btn-sm">Today</button>
-    </form>
+        <form action="" method="get">
+            <input type="hidden" name="month" value="<?php echo date('m', strtotime("-1 month", $first_day)); ?>">
+            <input type="hidden" name="year" value="<?php echo date('Y', strtotime("-1 month", $first_day)); ?>">
+            <button type="submit" class="btn btn-outline-primary btn-sm">Previous</button> 
+        </form>
+        <form action="" method="get">
+            <input type="hidden" name="month" value="<?php echo date('m', strtotime("+1 month", $first_day)); ?>">
+            <input type="hidden" name="year" value="<?php echo date('Y', strtotime("+1 month", $first_day)); ?>">
+            <button type="submit" class="btn btn-outline-primary btn-sm">Next</button>
+        </form>
+        <form action="" method="get">
+            <input type="hidden" name="month" value="<?php echo date('m'); ?>">
+            <input type="hidden" name="year" value="<?php echo date('Y'); ?>">
+            <button type="submit" class="btn btn-secondary btn-sm">Today</button>
+        </form>
     </div>
    
 </body>
